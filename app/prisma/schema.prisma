@@ -28,7 +28,7 @@ model Organisation {
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   Int      @unique
   name      String
-  Forms     Form[]
+  forms     Form[]
 }
 
 model Form {
