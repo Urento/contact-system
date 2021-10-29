@@ -11,7 +11,7 @@ export type StarPost_post = {
 };
 export type StarPost_post$data = StarPost_post;
 export type StarPost_post$key = {
-    readonly " $data"?: StarPost_post$data;
+    readonly " $data"?: StarPost_post$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"StarPost_post">;
 };
 

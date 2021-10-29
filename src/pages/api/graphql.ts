@@ -1,11 +1,3 @@
-/**
- * This is the demo GraphQL API.
- * This API serves a simple GraphQL API for the blog.
- * You can _probably_ ignore the contents of this file
- * entirely, as it just is used to power the API,
- * and not demonstrate the core relay mechanics.
- */
-
 import sha256 from "crypto-js/sha256";
 import fs from "fs";
 import { PrismaClient, User } from "@prisma/client";
@@ -24,6 +16,7 @@ import {
 } from "graphql-helix";
 import { printSchema } from "graphql";
 import jwt from "jsonwebtoken";
+import nookies from "nookies";
 
 interface Context {
   req: NextApiRequest;
@@ -146,6 +139,9 @@ builder.queryType({
         });
       },
     }),
+
+    //TODO: Add Verify Token Query
+    //TODO: Convert Login Mutation to Query
   }),
 });
 
@@ -221,6 +217,7 @@ builder.mutationType({
       },
       resolve: async (_parent, { email, password }, ctx) => {
         const encryptedPassword = sha256(password).toString();
+        console.log("dfkjng");
         const u = await db.user.findFirst({
           where: {
             email: email,
@@ -228,22 +225,31 @@ builder.mutationType({
           },
           rejectOnNotFound: true,
         });
+        console.log(u);
 
         if (!u) {
           throw new Error("User not found");
         }
 
         const privateKey = process.env.PRIVATE_KEY;
+        console.log(privateKey);
         const t = jwt.sign({ email: email }, privateKey!, {
-          algorithm: "RS256",
+          expiresIn: "1d",
         });
 
         const token = await db.token.create({
           data: {
             email: email,
-            token: t,
+            token: t!,
             expiredAt: new Date(),
           },
+        });
+
+        nookies.set(ctx, "token", t, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          path: "/",
+          maxAge: 86400,
         });
 
         return {

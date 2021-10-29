@@ -51,36 +51,36 @@ export function CreateUser() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const email = form.values.email;
+    const password = form.values.password;
+    const username = form.values.username;
 
-    if (
-      form.values.email === "" ||
-      form.values.password === "" ||
-      form.values.username === ""
-    )
-      return;
+    if (email === "" || password === "" || username === "") return;
 
-    if (!/^\S+@\S+$/.test(form.values.email)) return;
+    if (!/^\S+@\S+$/.test(email)) return;
 
     createUser({
       variables: {
-        email: form.values.email,
-        username: form.values.username,
-        password: form.values.password,
+        email: email,
+        username: username,
+        password: password,
       },
-      // Once the request completes, reset the UI back to its initial state.
       onCompleted() {
         setHasError({
           hasError: false,
           error: "",
         });
         setRegistered(true);
+        form.errors.email = false;
+        form.errors.password = false;
+        form.errors.username = false;
         form.reset();
       },
       onError(error: Error) {
         setRegistered(false);
         setHasError({
           hasError: true,
-          error: form.values.email + " is already in use",
+          error: email + " is already in use",
         });
       },
     });

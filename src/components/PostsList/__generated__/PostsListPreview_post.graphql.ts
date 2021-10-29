@@ -14,7 +14,7 @@ export type PostsListPreview_post = {
 };
 export type PostsListPreview_post$data = PostsListPreview_post;
 export type PostsListPreview_post$key = {
-    readonly " $data"?: PostsListPreview_post$data;
+    readonly " $data"?: PostsListPreview_post$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PostsListPreview_post">;
 };
 

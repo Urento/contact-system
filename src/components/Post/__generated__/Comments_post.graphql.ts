@@ -18,7 +18,7 @@ export type Comments_post = {
 };
 export type Comments_post$data = Comments_post;
 export type Comments_post$key = {
-    readonly " $data"?: Comments_post$data;
+    readonly " $data"?: Comments_post$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Comments_post">;
 };
 

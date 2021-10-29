@@ -11,7 +11,7 @@ export type PostsList_post = ReadonlyArray<{
 }>;
 export type PostsList_post$data = PostsList_post;
 export type PostsList_post$key = ReadonlyArray<{
-    readonly " $data"?: PostsList_post$data;
+    readonly " $data"?: PostsList_post$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PostsList_post">;
 }>;
 

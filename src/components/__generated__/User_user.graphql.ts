@@ -11,7 +11,7 @@ export type User_user = {
 };
 export type User_user$data = User_user;
 export type User_user$key = {
-    readonly " $data"?: User_user$data;
+    readonly " $data"?: User_user$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"User_user">;
 };
 

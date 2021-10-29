@@ -16,7 +16,7 @@ export type Post_post = {
 };
 export type Post_post$data = Post_post;
 export type Post_post$key = {
-    readonly " $data"?: Post_post$data;
+    readonly " $data"?: Post_post$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Post_post">;
 };
 

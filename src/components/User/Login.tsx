@@ -12,7 +12,6 @@ import {
 import { useForm } from "@mantine/hooks";
 import { useMutation, graphql } from "relay-hooks";
 import { LoginUserMutation } from "./__generated__/LoginUserMutation.graphql";
-import { Router } from "next/router";
 
 export function Login() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -46,11 +45,15 @@ export function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const email = form.values.email;
+    const password = form.values.password;
+
+    if (email === "" || password === "") return;
 
     loginUser({
       variables: {
-        email: form.values.email,
-        password: form.values.password,
+        email: email,
+        password: password,
       },
       onCompleted() {
         setHasError({
@@ -81,7 +84,7 @@ export function Login() {
           </Alert>
         )}
         {loggedIn && (
-          <Alert title="Successfully logged in!">
+          <Alert title="Successfully logged in!" color="green">
             You have successfully logged in!
           </Alert>
         )}
@@ -104,9 +107,12 @@ export function Login() {
               form.setFieldValue("password", event.currentTarget.value)
             }
           />
-          <Button type="submit" loading={loading}>
-            Login
-          </Button>
+          <br />
+          <Center>
+            <Button type="submit" loading={loading}>
+              Login
+            </Button>
+          </Center>
         </form>
 
         <Center>
